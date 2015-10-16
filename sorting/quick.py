@@ -18,7 +18,7 @@ def qsort(array, left, right):
         while array[l_index] <= key and l_index < r_index:
             l_index += 1
         array[l_index], array[r_index] = array[r_index], array[l_index]
-    array[left], array[l_index] = array[l_index], array[left]
+    array[left], array[l_index] = array[l_index], key  # 左右往中移动最后重合，这个位置为key所应该在的位置
     qsort(array, left, l_index-1)
     qsort(array, l_index+1, right)
     return array
