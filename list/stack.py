@@ -15,7 +15,7 @@ class Stack(object):
     def peek(self):
         return self.items[len(self.items) - 1]
 
-    def size(self):
+    def get_size(self):
         return len(self.items)
 
     def is_empty(self):
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     stack = Stack()
     stack.push(3)
     stack.push(142)
-    print stack.size()
+    print stack.get_size()
     print stack.peek()
     print stack.pop()
     print stack.is_empty()

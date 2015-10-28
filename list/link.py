@@ -3,7 +3,7 @@
 
 
 class Node(object):
-    def __init__(self, item, p=0):
+    def __init__(self, item, p=None):
         self.data = item
         self._next = p
 
@@ -25,24 +25,27 @@ class LinkList(object):
 
     def insert(self, index, item):
         p = self.head
-        i = 1
-        while p and i < index:
+        i = 0
+        while p and i < index - 1:
             p = p._next
             i += 1
         if p is None or i > index:
             return False
-        node = Node(item, p)
+        node = Node(item, p._next)
         p._next = node
         return True
 
     def delete(self, index):
         ptr = self.head
         i = 1
-        while i < index - 1 and ptr:
-            ptr = ptr.__next
+        while ptr._next and i < index:
+            ptr = ptr._next
             i += 1
         if i > index or ptr is None:
             return False
+        q = ptr._next
+        ptr._next = q._next
+        return q.data
 
     def search(self, item):
         ptr = self.head
@@ -56,16 +59,17 @@ class LinkList(object):
 
     def display(self):
         p = self.head
-        index = 1
+        print "linklist:"
         while p._next:
-            print p.data
             p = p._next
-
+            print p.data
 
 if __name__ == "__main__":
     link_list = LinkList()
-    print link_list.get_length()
     print link_list.insert(1, 10)
     print link_list.insert(1, 4)
+    print link_list.insert(3, 5)
     link_list.display()
-    print link_list.search(10)
+    print link_list.delete(1)
+    link_list.display()
+    print link_list.get_length()
