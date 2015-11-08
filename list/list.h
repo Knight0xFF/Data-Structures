@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #ifndef DATA_STRUCT_LIST_H
 #define DATA_STRUCT_LIST_H
 #define MAXSIZE 20
@@ -19,4 +20,9 @@ typedef struct
     ElemType data[MAXSIZE];
     int length;
 } SqList;
+typedef struct Node
+{
+    ElemType data;
+    struct Node *next;
+} Node, *NodePtr, *LinkList;
 #endif //DATA_STRUCT_LIST_H
