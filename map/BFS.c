@@ -11,7 +11,7 @@ typedef int Boolean; /* Boolean是布尔类型,其值是TRUE或FALSE */
 typedef char VertexType; /* 顶点类型应由用户定义 */
 typedef int EdgeType; /* 边上的权值类型应由用户定义 */
 
-#define MAXSIZE 9 /* 存储空间初始分配量 */
+#define MAXSIZE 9
 #define MAXVEX 9
 
 typedef struct
@@ -21,14 +21,13 @@ typedef struct
     int numVertexes, numEdges; /* 图中当前的顶点数和边数 */
 }MGraph;
 
-/* 用到的队列结构与函数********************************** */
 
 /* 循环队列的顺序存储结构 */
 typedef struct
 {
     int data[MAXSIZE];
-    int front;    	/* 头指针 */
-    int rear;		/* 尾指针，若队列不空，指向队列尾元素的下一个位置 */
+    int front;
+    int rear;
 }Queue;
 
 /* 初始化一个空队列Q */
@@ -72,6 +71,7 @@ Status DeQueue(Queue *Q,int *e)
 /* ****************************************************** */
 
 Boolean visited[MAXVEX]; /* 访问标志的数组 */
+int Order[MAXSIZE];  /* 储存节点的父节点 */
 
 void CreateMGraph(MGraph *G)
 {
@@ -133,14 +133,17 @@ void CreateMGraph(MGraph *G)
 
 }
 
-
 /* 邻接矩阵的广度遍历算法 */
-void BFSTraverse(MGraph G)
+Status BFSTraverse(MGraph G)
 {
     int i, j;
     Queue Q;
     for(i = 0; i < G.numVertexes; i++)
+    {
         visited[i] = FALSE;
+        Order[i] = -1;
+    }
+
     InitQueue(&Q);		/* 初始化一辅助用的队列 */
     for(i = 0; i < G.numVertexes; i++)  /* 对每一个顶点做循环 */
     {
@@ -158,6 +161,7 @@ void BFSTraverse(MGraph G)
                     if(G.arc[i][j] == 1 && !visited[j])
                     {
                         visited[j]=TRUE;			/* 将找到的此顶点标记为已访问 */
+                        Order[j] = i;
                         printf("%c ", G.vexs[j]);	/* 打印顶点 */
                         EnQueue(&Q,j);				/* 将找到的此顶点入队列  */
                     }
@@ -167,6 +171,19 @@ void BFSTraverse(MGraph G)
     }
 }
 
+void PrintPath(MGraph G, int s, int v)
+{
+    if (Order[v] == -1)
+    {
+        printf("%c", G.vexs[s]);
+        return;
+    }
+    else
+    {
+        PrintPath(G, s, Order[v]);
+        printf("%c", G.vexs[v]);
+    }
+}
 
 int main(void)
 {
@@ -174,5 +191,8 @@ int main(void)
     CreateMGraph(&G);
     printf("\n广度遍历：");
     BFSTraverse(G);
+    printf("\n最短路径：");
+    PrintPath(G, 0, 4);
+
     return 0;
 }
