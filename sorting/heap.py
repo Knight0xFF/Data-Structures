@@ -6,7 +6,7 @@ def heap_adjust(array, start, end):  # start为需要调整的堆的位置
     root = start
     while True:
         child = root * 2 + 1  # 获取子节点
-        if child > end:
+        if child > end:  # 保证跟子节点的儿子都比较
             break
         if child + 1 <= end and array[child] < array[child+1]:  # 获得较大的子节点
             child += 1
