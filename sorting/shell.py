@@ -5,6 +5,7 @@
 def shell(array):
     length = len(array)
     steps = int(length/2)
+    print steps
     while steps > 0:
         for i in xrange(steps, length):
             key = array[i]

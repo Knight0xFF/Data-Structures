@@ -23,6 +23,7 @@ def qsort(array, left, right):
     qsort(array, l_index+1, right)
     return array
 
+
 if __name__ == "__main__":
     test_data = [26, 44, 38, 5, 47, 15, 36, 3, 27, 2, 46, 4, 19, 50, 48]
     print quick(test_data)
